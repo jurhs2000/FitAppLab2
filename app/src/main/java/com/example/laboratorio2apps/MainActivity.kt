@@ -1,3 +1,14 @@
+/*
+* Universidad del Valle de Guatemala
+* Programacion de Aplicaciones moviles y Juegos
+* Julio Roberto Herrera Saban 19402
+* 01/2020
+*
+* MainActivity de FitApp Laboratorio 2
+* Cuenta las vueltas de un ejercicio, al llegar a 10 muestra un toast y una imagen
+* Al dejar presionado el boton de añadir vueltas muestra cuantas vueltas faltan
+* Al llegar a 20 ya no se dan mas vueltas y se da la opcion de reiniciar con su respectivo boton
+* */
 package com.example.laboratorio2apps
 
 import android.app.Dialog
@@ -43,14 +54,14 @@ class MainActivity : AppCompatActivity() {
             if (laps == 10) {
                 showToast()
                 vibrationDadadadaaadaaadadada()
-                trophyImage.visibility = View.VISIBLE
+                trophyImage.visibility = View.VISIBLE //Hacer visible la imagen inicial
             } else if (laps == 20) {
-                trophyImage.setImageResource(R.drawable.award)
+                trophyImage.setImageResource(R.drawable.award) //Cambiar la imagen del ImageView
                 showToast()
             } else if (laps > 20) {
                 laps = 20
             }
-            textLaps.setText(laps.toString())
+            textLaps.setText(laps.toString()) //Actualizar el texto cada ciclo
         }
         //Click largo en el boton para anadir vueltas
         btnAddCount.setOnLongClickListener {
@@ -61,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         btnRestart.setOnClickListener {
             laps = 0
             textLaps.setText(laps.toString())
-            trophyImage.visibility = View.INVISIBLE
+            trophyImage.visibility = View.INVISIBLE //Esconder la imagen del trofeo
         }
     }
 
@@ -69,12 +80,15 @@ class MainActivity : AppCompatActivity() {
         val context: Context = applicationContext
         val inflater: LayoutInflater = layoutInflater
         val toastRoot: View = inflater.inflate(R.layout.custom_toast, null)
-        val toastText: TextView = toastRoot.findViewById(R.id.toast_text)
-        toastText.text = resources.getString(R.string.toast_text) + (20 - laps) + " " + resources.getString(R.string.laps)
+        /*
+        * Es necesario obtener la vista (toastRoot) para que al llamar los elementos (toast_text) por id, estos no regresen como null.
+        * */
+        val toastText: TextView = toastRoot.findViewById(R.id.toast_text) //Esto daría null si no se obtuviera de la vista del custom_toast
+        toastText.text = resources.getString(R.string.toast_text) + (20 - laps) + " " + resources.getString(R.string.laps) //Estos textos se obtienen del strings.xml
         if (laps == 20) {
             toastText.text = resources.getString(R.string.congrats)
         }
-        val toast: Toast = Toast(context)
+        val toast: Toast = Toast(context) // Especificando las opciones del toast
         toast.view = toastRoot
         toast.setGravity(Gravity.BOTTOM,0,50)
         toast.duration = Toast.LENGTH_SHORT
@@ -83,7 +97,7 @@ class MainActivity : AppCompatActivity() {
 
     fun vibrationDadadadaaadaaadadada() {
         val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        val vibratePattern3 = longArrayOf(200,200,50,200,50,200,175,450,50,450,200,150,50,150,50,150)
+        val vibratePattern3 = longArrayOf(200,200,50,200,50,200,175,450,50,450,200,150,50,150,50,150) //Vibration Pattern, crea la "cancion" con la vibracion
         v.vibrate(VibrationEffect.createWaveform(vibratePattern3, -1)) //Solo funciona con minSDKversion 26 en app gradle
     }
 }
