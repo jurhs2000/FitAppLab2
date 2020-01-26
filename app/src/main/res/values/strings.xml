@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Fit App</string>
+    <string name="lap">Añadir vuelta</string>
+    <string name="restart">Reiniciar</string>
+    <string name="laps">vueltas</string>
+    <string name="toast_text">"Ya solo faltan "</string>
+    <string name="congrats">"Felicitaciones!!! Lo has logrado!"</string>
+</resources>
