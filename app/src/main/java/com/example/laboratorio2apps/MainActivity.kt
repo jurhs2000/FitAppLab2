@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             laps++
             if (laps == 10) {
                 showToast()
-                vibrationDadadadaaadaaadadada()
+                //vibrationDadadadaaadaaadadada()
                 trophyImage.visibility = View.VISIBLE
             } else if (laps == 20) {
                 trophyImage.setImageResource(R.drawable.award)
@@ -81,9 +81,9 @@ class MainActivity : AppCompatActivity() {
         toast.show()
     }
 
-    fun vibrationDadadadaaadaaadadada() {
+    /*fun vibrationDadadadaaadaaadadada() {
         val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         val vibratePattern3 = longArrayOf(200,200,50,200,50,200,175,450,50,450,200,150,50,150,50,150)
         v.vibrate(VibrationEffect.createWaveform(vibratePattern3, -1)) //Solo funciona con minSDKversion 26 en app gradle
-    }
+    }*/
 }
