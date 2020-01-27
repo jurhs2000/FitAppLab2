@@ -101,10 +101,12 @@ class MainActivity : AppCompatActivity() {
             toastText.text = resources.getString(R.string.congrats)
         }
         val toast: Toast = Toast(context) // Especificando las opciones del toast
-        toast.view = toastRoot
-        toast.setGravity(Gravity.BOTTOM,0,50)
-        toast.duration = Toast.LENGTH_SHORT
-        toast.show()
+        with(toast) {
+            view = toastRoot
+            setGravity(Gravity.BOTTOM,0,50)
+            duration = Toast.LENGTH_SHORT
+            show()
+        }
     }
 
     private fun vibrationDadadadaaadaaadadada() {
