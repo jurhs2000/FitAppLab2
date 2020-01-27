@@ -38,30 +38,23 @@ import org.w3c.dom.Text
 class MainActivity : AppCompatActivity() {
 
     //Variable que cuenta las vueltas y se le suman
-    var laps = 0
+    private var laps = 0
+    private lateinit var btnAddCount: Button
+    private lateinit var textLaps: TextView
+    private lateinit var trophyImage: ImageView
+    private lateinit var btnRestart: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //Elementos de vista
-        val btnAddCount: Button = findViewById(R.id.buttonAddCount) //boton para anadir cuentas
-        val textLaps: TextView = findViewById(R.id.laps) //Texto que muestra las vueltas
-        val trophyImage: ImageView = findViewById(R.id.trophy) //Imagen de trofeo
-        val btnRestart: Button = findViewById(R.id.buttonRestore) //boton que reinicia las vueltas
+        btnAddCount = findViewById(R.id.buttonAddCount) //boton para anadir cuentas
+        textLaps = findViewById(R.id.laps) //Texto que muestra las vueltas
+        trophyImage = findViewById(R.id.trophy) //Imagen de trofeo
+        btnRestart = findViewById(R.id.buttonRestore) //boton que reinicia las vueltas
         //Click del boton para anadir vueltas
         btnAddCount.setOnClickListener {
-            laps++
-            if (laps == 10) {
-                showToast()
-                vibrationDadadadaaadaaadadada()
-                trophyImage.visibility = View.VISIBLE //Hacer visible la imagen inicial
-            } else if (laps == 20) {
-                trophyImage.setImageResource(R.drawable.award) //Cambiar la imagen del ImageView
-                showToast()
-            } else if (laps > 20) {
-                laps = 20
-            }
-            textLaps.setText(laps.toString()) //Actualizar el texto cada ciclo
+            addLap()
         }
         //Click largo en el boton para anadir vueltas
         btnAddCount.setOnLongClickListener {
@@ -70,13 +63,32 @@ class MainActivity : AppCompatActivity() {
         }
         //Click del boton para reiniciar vueltas
         btnRestart.setOnClickListener {
-            laps = 0
-            textLaps.setText(laps.toString())
-            trophyImage.visibility = View.INVISIBLE //Esconder la imagen del trofeo
+            showToastforLap()
         }
     }
 
-    fun showToast() {
+    private fun addLap() {
+        laps++
+        if (laps == 10) {
+            showToast()
+            //vibrationDadadadaaadaaadadada()
+            trophyImage.visibility = View.VISIBLE //Hacer visible la imagen inicial
+        } else if (laps == 20) {
+            trophyImage.setImageResource(R.drawable.award) //Cambiar la imagen del ImageView
+            showToast()
+        } else if (laps > 20) {
+            laps = 20
+        }
+        textLaps.setText(laps.toString()) //Actualizar el texto cada ciclo
+    }
+
+    private fun showToastforLap() {
+        laps = 0
+        textLaps.setText(laps.toString())
+        trophyImage.visibility = View.INVISIBLE //Esconder la imagen del trofeo
+    }
+
+    private fun showToast() {
         val context: Context = applicationContext
         val inflater: LayoutInflater = layoutInflater
         val toastRoot: View = inflater.inflate(R.layout.custom_toast, null)
@@ -95,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         toast.show()
     }
 
-    fun vibrationDadadadaaadaaadadada() {
+    private fun vibrationDadadadaaadaaadadada() {
         val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         val vibratePattern3 = longArrayOf(200,200,50,200,50,200,175,450,50,450,200,150,50,150,50,150) //Vibration Pattern, crea la "cancion" con la vibracion
         v.vibrate(VibrationEffect.createWaveform(vibratePattern3, -1)) //Solo funciona con minSDKversion 26 en app gradle
